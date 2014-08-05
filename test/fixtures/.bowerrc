@@ -1,0 +1,4 @@
+{
+  "strictSsl": true,
+  "directory": "vendor"
+}

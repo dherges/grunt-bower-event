@@ -1,0 +1,8 @@
+{
+  "name": "my-test-project",
+  "description": "A bower.json file for a test project",
+  "dependencies": {
+    "bootstrap": ">3",
+    "typeahead.js": "~0.10.4"
+  }
+}

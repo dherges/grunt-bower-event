@@ -1,6 +1,6 @@
 {
   "name": "grunt-bower",
-  "description": "Bower packages become client library folders, deployment-ready for Adobe Experience Manager.",
+  "description": "Now Grunt is talking your bower language, listening for answers.",
   "version": "0.2.0",
   "homepage": "https://github.com/dherges/grunt-bower",
   "author": {

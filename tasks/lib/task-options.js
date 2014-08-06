@@ -36,9 +36,8 @@ module.exports = {
   argumentOptions: {},
 
   /**
-   * Specify your custom scaffolding functions with "{log: function (data) {}, error: function (data) {}, end: function
-   * (data) {})" or use a built-in scaffolder with "bloody-hell-scaffolder-name" (String)
+   * Specify your custom listener functions (TBD)
    */
-  scaffold: undefined
+  listener: undefined
 
 };

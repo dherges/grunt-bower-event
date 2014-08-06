@@ -40,7 +40,32 @@ module.exports = function(grunt) {
         },
         command: "list" // If left empty, use the target name
       },
-      test2: {}
+      install: {
+        options: {
+          config: {
+            interactive: true
+          }
+        }
+      },
+      aemClientLibraries: {
+        options: {
+          listener: 'AemClientLibraries'
+        },
+        command: "list"
+      },
+      customListener: {
+        options: {
+          listener: {
+            log: function () {
+              grunt.log.oklns("My Custom Listener logs!");
+            },
+            end: function (data) {
+              grunt.log.oklns("My Custom Listener received the end event: " + data);
+            }
+          }
+        },
+        command: "list"
+      }
     },
 
     // Unit tests.

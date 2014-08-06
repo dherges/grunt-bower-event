@@ -1,4 +1,4 @@
 {
   "strictSsl": true,
-  "directory": "vendor"
+  "directory": "../output"
 }

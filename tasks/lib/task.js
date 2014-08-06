@@ -10,12 +10,12 @@
 
 
 var defaultOptions = require('./task-options');
+var GruntLog = require('./listeners/GruntLog');
 
 var bower = require('bower');
 var bowerConfig = require('bower-config');
 var mout = require('mout');
 var path = require('path');
-
 
 /** 
  * Creates a new task.
@@ -53,28 +53,22 @@ Task.prototype.run = function() {
   var args = [];
   if (this.options.arguments) {
     args.push(this.options.arguments);
+  } else if (command == 'install') {
+    // install takes three params (endpoints, options, config)
+    args.push(undefined);
   }
   args.push(this.options.argumentOptions, config);
   this.grunt.verbose.writeln("Command arguments are: " + JSON.stringify(args));
 
-  // 4) Get the event listener functions that will do the scaffolding magic
-  var scaffolders = this.getScaffoldingFunctions();
+  // 4) Get the result dispatcher that will delegate event results to the listeners
+  var dispatcher = this.getResultDispatcher();
 
-  // 5) Run bower
-  if (config.interactive) {
-    cmd.apply(bower.commands, args)
-      .on('log', scaffolders.log)
-      .on('error', scaffolders.error)
-      .on('end', scaffolders.end)
-      .on('prompt', function (prompts, callback) {
-        inquirer.prompt(prompts, callback);
-      });
-  } else {
-    cmd.apply(bower.commands, args)
-      .on('log', scaffolders.log)
-      .on('error', scaffolders.error)
-      .on('end', scaffolders.end)
-  }
+  // 5) Run bower and let the dispatcher call all the listeners
+  cmd.apply(bower.commands, args)
+    .on('log', dispatcher.onLog)
+    .on('error', dispatcher.onError)
+    .on('end', dispatcher.onEnd)
+    .on('prompt', dispatcher.onPrompt);
 };
 
 Task.prototype.getConfiguration = function () {
@@ -106,39 +100,79 @@ Task.prototype.getConfiguration = function () {
   return config;
 };
 
-Task.prototype.getScaffoldingFunctions = function () {
-
+Task.prototype.getResultDispatcher = function () {
   var done = this.done;
-  var grunt = this.grunt;
+  var listeners = [];
 
-  // TODO: build the listener functions
-  var callDone = function () {
-    done();
-  };
-  var noop = function () {};
+  // always add the grunt logging
+  listeners.push(new GruntLog());
 
-
-  // TODO: get the scaffolders
-  var scaffold = {
-    end: noop,
-    error: noop,
-    log: noop
-  };
-  if (typeof this.options.scaffold == typeof 'string') {
-    scaffold = require(this.options.scaffold);
-  } else if (typeof this.options.scaffold == typeof {}) {
-    scaffold = this.options.scaffold;
-  } else if (typeof this.options.scaffold == typeof []) {
-    // TODO: can we concatenate scaffolders?
+  if (typeof this.options.listener == typeof 'string') {
+    var ListenerProto;
+    try {
+      ListenerProto = require('./listeners/' + this.options.listener);
+    } catch (err) {
+      try {
+        ListenerProto = require(this.options.scaffold);
+      } catch (err2) {
+        this.grunt.fail.fatal('Listener ' + this.options.listener + ' not found!');
+      }
+    }
+    listeners.push(new ListenerProto());
+  } else if (typeof this.options.listener == typeof {}) {
+    /* not a prototype so that users can plug-in a listener in
+     * grunt.initConfig({
+     * ..
+     *   bower: {
+     *     options: {
+     *       listener: {
+     *         end: function (data) {
+     *           // do something with <%= grunt.templates %> or other stuff
+     *         }
+     *       }
+     *     }
+     *   }
+     * ..
+     * })
+     */
+    listeners.push(this.options.listener);
+  } else if (typeof this.options.listener == typeof []) {
+    // concatenate listeners
+    this.options.listener.forEach(function (ListenerProto ) {
+      listeners.push(new ListenerProto());
+    });
   }
 
-  var gruntLog = require('./scaffolding/grunt-log');
-
   return {
-    end: mout.function.series.apply(mout.function, [scaffold.end, gruntLog.end, callDone]),
-    error: mout.function.series.apply(mout.function, [scaffold.error, gruntLog.error, callDone]),
-    log: mout.function.series.apply(mout.function, [scaffold.log, gruntLog.log])
+    'onLog': function (data) {
+      listeners.forEach(function (listener) {
+        listener.log && listener.log(data);
+      });
+    },
+
+    'onEnd': function (data) {
+      listeners.forEach(function (listener) {
+        listener.end && listener.end(data);
+      });
+
+      done();
+    },
+
+    'onError': function (error) {
+      listeners.forEach(function (listener) {
+        listener.error && listener.error(error);
+      });
+
+      done();
+    },
+
+    'onPrompt': function (prompts, callback) {
+      listeners.forEach(function (listener) {
+        listener.prompt && listener.prompt(prompts, callback);
+      });
+    }
   };
 };
+
 
 module.exports = Task;

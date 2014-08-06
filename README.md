@@ -5,6 +5,7 @@ grunt-bower
 
 [![Build Status](https://travis-ci.org/dherges/grunt-bower.svg?branch=master)](https://travis-ci.org/dherges/grunt-bower)
 
-Manages your Bower packages through Grunt, scaffolding things for your target platform.
+Now Grunt is talking your Bower language, listening for answers.
 
-Original idea: "Bower packages become client library folders, deployment-ready for Adobe Experience Manager."
+ * former idea 1: "Manages your Bower packages through Grunt, scaffolding things for your target platform."
+ * former idea 2: "Bower packages become client library folders, deployment-ready for Adobe Experience Manager."

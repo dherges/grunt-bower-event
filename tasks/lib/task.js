@@ -9,22 +9,13 @@
 'use strict';
 
 
-var defaultOptions = {
-  // Bower working directory where your .bowerrc configuration is located
-  bowerDirectory: undefined,
-  // Bower configuration according to https://github.com/bower/config/blob/master/lib/util/defaults.js
-  config: null,
-  // Arguments that are passed to the bower command, e.g. ['bootstrap'] for 'bower install'; leave blank if command does not take arguments
-  arguments: undefined,
-  // Argument options that are passed to the bower command, e.g. {"force-latest": true} for 'bower install'
-  argumentOptions: {},
-  converter: './converter/content-xml',
-};
+var defaultOptions = require('./task-options');
 
 var bower = require('bower');
 var bowerConfig = require('bower-config');
 var mout = require('mout');
 var path = require('path');
+
 
 /** 
  * Creates a new task.
@@ -38,11 +29,11 @@ var Task = function (context, grunt) {
 
   // Merge task-specific and/or target-specific options with these defaults.
   this.options = context.options(defaultOptions);
-}
+};
 
 
 Task.prototype.run = function() {
-  var done = this.context.async();
+  this.done = this.context.async();
 
   // 1) Determine the Bower command that is to be executed
   var command = this.context.data.command || this.context.target;
@@ -66,53 +57,25 @@ Task.prototype.run = function() {
   args.push(this.options.argumentOptions, config);
   this.grunt.verbose.writeln("Command arguments are: " + JSON.stringify(args));
 
-  var grunt = this.grunt;
-  var endFunction = function (data) {
-    grunt.log.ok(JSON.stringify(data));
-    grunt.log.oklns("Bower command '" + command + "' finished.");
-    done();
-  }
-  var logFunction = function (data) {
-    grunt.log.write("log");
-    grunt.log.writelns(JSON.stringify(data));
-  }
-  var errorFunction = function (err) {
-    grunt.log.error("error");
-    grunt.log.errorlns(err);
-  }
+  // 4) Get the event listener functions that will do the scaffolding magic
+  var scaffolders = this.getScaffoldingFunctions();
 
-  // 4) Run bower
+  // 5) Run bower
   if (config.interactive) {
     cmd.apply(bower.commands, args)
-      .on('log', logFunction)
-      .on('error', errorFunction)
-      .on('end', endFunction) 
+      .on('log', scaffolders.log)
+      .on('error', scaffolders.error)
+      .on('end', scaffolders.end)
       .on('prompt', function (prompts, callback) {
         inquirer.prompt(prompts, callback);
       });
   } else {
     cmd.apply(bower.commands, args)
-      .on('log', logFunction)
-      .on('error', errorFunction)
-      .on('end', endFunction) 
+      .on('log', scaffolders.log)
+      .on('error', scaffolders.error)
+      .on('end', scaffolders.end)
   }
-
-/*
-    // 3a) read the list.json
-    var packages = readJSON('bower_list.json');
-
-    // 3b) generate AEM files
-    var converter = require(options.converter); // converter should be an option
-
-    for (var pkgName in packages) {
-      var pkg = packages[pkgName];
-
-      converter.generateCqClientLibaryFolder(pkg);
-    }
-
-    console.log(converter);
-*/
-}
+};
 
 Task.prototype.getConfiguration = function () {
   var config = bowerConfig.read(this.options.bowerDirectory);
@@ -141,6 +104,41 @@ Task.prototype.getConfiguration = function () {
   mout.object.mixIn(config, this.options.config);
 
   return config;
-}
+};
+
+Task.prototype.getScaffoldingFunctions = function () {
+
+  var done = this.done;
+  var grunt = this.grunt;
+
+  // TODO: build the listener functions
+  var callDone = function () {
+    done();
+  };
+  var noop = function () {};
+
+
+  // TODO: get the scaffolders
+  var scaffold = {
+    end: noop,
+    error: noop,
+    log: noop
+  };
+  if (typeof this.options.scaffold == typeof 'string') {
+    scaffold = require(this.options.scaffold);
+  } else if (typeof this.options.scaffold == typeof {}) {
+    scaffold = this.options.scaffold;
+  } else if (typeof this.options.scaffold == typeof []) {
+    // TODO: can we concatenate scaffolders?
+  }
+
+  var gruntLog = require('./scaffolding/grunt-log');
+
+  return {
+    end: mout.function.series.apply(mout.function, [scaffold.end, gruntLog.end, callDone]),
+    error: mout.function.series.apply(mout.function, [scaffold.error, gruntLog.error, callDone]),
+    log: mout.function.series.apply(mout.function, [scaffold.log, gruntLog.log])
+  };
+};
 
 module.exports = Task;

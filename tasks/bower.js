@@ -18,7 +18,7 @@ module.exports = function(grunt) {
   // Put the function that actually executes the task in a separate file, so it becomes more 'test-able'
   var TaskFunction = require('./lib/task');
 
-  grunt.registerMultiTask('bower-aem', packageJson.description, function () {
+  grunt.registerMultiTask('bower', packageJson.description, function () {
     new TaskFunction(this, grunt).run(); // looks like Java's new Runnable().run()... Oo
   });
 }

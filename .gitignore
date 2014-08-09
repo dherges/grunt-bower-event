@@ -3,3 +3,4 @@ test/output/
 .idea/
 **/*.iml
 
+.DS_Store

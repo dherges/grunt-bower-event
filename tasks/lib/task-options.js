@@ -20,20 +20,29 @@ module.exports = {
   bowerDirectory: undefined,
 
   /**
-   * Bower configuration according to https://github.com/bower/config/blob/master/lib/util/defaults.js
+   * Bower configuration according to its specification at
+   * https://github.com/bower/config/blob/master/lib/util/defaults.js
    */
   config: null,
 
   /**
-   * Arguments that are passed to the bower command, e.g. ['bootstrap'] for 'bower install'; leave blank if command
-   * does not take arguments.
+   * Arguments that are passed to the bower command; e.g., ```['bootstrap']``` for
+   * command  ```'bower install'```. Leave blank if command does not take arguments.
    */
   arguments: undefined,
 
   /**
-   * Argument options that are passed to the bower command, e.g. {"force-latest": true} for 'bower install'
+   * Argument options that are passed to the bower command; e.g.,
+   * ```{"force-latest": true}``` for command ```bower install```
    */
   argumentOptions: {},
+
+  /**
+   * Bower events are namespace-prefixed with this label when they are emitted through
+   * ```grunt.event```. Example: to listen for a log event ```grunt.event.on('bower.log',
+   * function (data) { ... })```
+   */
+  eventPrefix: 'bower.',
 
   /**
    * Specify your custom listener functions (TBD)

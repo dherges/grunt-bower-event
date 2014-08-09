@@ -12,7 +12,11 @@ var grunt = require('grunt');
 var inquirer = require('inquirer');
 
 var GruntLog = function () {
-
+console.log("GruntLog inited");
+  grunt.event.on('bower.log', this.log.bind(this))
+  grunt.event.on('bower.error', this.error.bind(this))
+  grunt.event.on('bower.end', this.end.bind(this))
+  grunt.event.on('bower.prompt', this.prompt.bind(this))
 };
 
 GruntLog.prototype.end = function (data) {
@@ -24,6 +28,8 @@ GruntLog.prototype.error = function (err) {
 };
 
 GruntLog.prototype.log = function (data) {
+console.log(grunt.event);
+console.log(this)
   grunt.log.writelns(data.id + " >> " + data.message);
 
   data.data && data.data.picks && data.data.picks.forEach(function(pick, index) {

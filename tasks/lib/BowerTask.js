@@ -23,7 +23,7 @@ var path = require('path');
  * @param context Context of the task function; the 'this' you would normally refer to inside a task function
  * @param grunt Grunt object
  */
-var Task = function (context, grunt) {
+var BowerTask = function (context, grunt) {
   this.context = context;
   this.grunt = grunt;
 
@@ -32,7 +32,7 @@ var Task = function (context, grunt) {
 };
 
 
-Task.prototype.run = function() {
+BowerTask.prototype.run = function() {
   this.done = this.context.async();
 
   // 1) Determine the Bower command that is to be executed
@@ -61,17 +61,32 @@ Task.prototype.run = function() {
   this.grunt.verbose.writeln("Command arguments are: " + JSON.stringify(args));
 
   // 4) Get the result dispatcher that will delegate event results to the listeners
+  // TODO: the listener GruntLog is instantiated multiple times, thus listening multiple
+  // times for consecutive targets
   var dispatcher = this.getResultDispatcher();
 
-  // 5) Run bower and let the dispatcher call all the listeners
+  // 5) Run bower and forward events to grunt.event API
+  var done = this.done;
+  var grunt = this.grunt;
+  var prefix = this.options.eventPrefix;
   cmd.apply(bower.commands, args)
-    .on('log', dispatcher.onLog)
-    .on('error', dispatcher.onError)
-    .on('end', dispatcher.onEnd)
-    .on('prompt', dispatcher.onPrompt);
+    .on('log', function () {
+      grunt.event.emit(prefix + 'log', arguments);
+     })
+    .on('error', function () {
+      grunt.event.emit(prefix + 'error', arguments);
+      done();
+    })
+    .on('end', function () {
+      grunt.event.emit(prefix + 'end', arguments);
+      done();
+    })
+    .on('prompt', function () {
+      grunt.event.emit(prefix + 'prompt', arguments);
+    });
 };
 
-Task.prototype.getConfiguration = function () {
+BowerTask.prototype.getConfiguration = function () {
   var config = bowerConfig.read(this.options.bowerDirectory);
 
   /**** Compare to https://github.com/bower/bower/blob/master/lib/config.js#L6-L24 ****/
@@ -100,7 +115,7 @@ Task.prototype.getConfiguration = function () {
   return config;
 };
 
-Task.prototype.getResultDispatcher = function () {
+BowerTask.prototype.getResultDispatcher = function () {
   var done = this.done;
   var listeners = [];
 
@@ -142,7 +157,7 @@ Task.prototype.getResultDispatcher = function () {
       listeners.push(new ListenerProto());
     });
   }
-
+/*
   return {
     'onLog': function (data) {
       listeners.forEach(function (listener) {
@@ -172,7 +187,8 @@ Task.prototype.getResultDispatcher = function () {
       });
     }
   };
+*/
 };
 
 
-module.exports = Task;
+module.exports = BowerTask;

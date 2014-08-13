@@ -61,7 +61,7 @@ BowerTask.prototype.run = function() {
   this.grunt.verbose.writeln("Command arguments are: " + JSON.stringify(args));
 
   // 4) Get the result dispatcher that will delegate event results to the listeners
-  // TODO: the listener GruntLog is instantiated multiple times, thus listening multiple
+  // FIXME: the listener GruntLog is instantiated multiple times, thus listening multiple
   // times for consecutive targets
   var dispatcher = this.getResultDispatcher();
 

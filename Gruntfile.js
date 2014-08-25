@@ -69,8 +69,10 @@ module.exports = function(grunt) {
     },
 
     // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js'],
+    mocha_istanbul: {
+      coverage: {
+        src: 'test/mocha'
+      }
     }
 
   });
@@ -81,11 +83,12 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-mocha-istanbul');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'bower', 'nodeunit']);
+  // TODO: write a nice test task
+  grunt.registerTask('test', ['clean', 'bower', 'mocha_istanbul']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);

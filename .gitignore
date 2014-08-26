@@ -1,5 +1,5 @@
 node_modules/
-test/output/
+tests/output/
 coverage/
 .idea/
 **/*.iml

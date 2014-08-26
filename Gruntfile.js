@@ -18,7 +18,7 @@ module.exports = function(grunt) {
         force: true
       },
       all: {
-        src: ['Gruntfile.js', 'lib/**/*.js', 'tasks/*.js', '<%= nodeunit.tests %>']
+        src: ['Gruntfile.js', 'tasks/**/*.js', 'tests/mocha/**/*.js']
       }
     },
 
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     bower: {
       options: {
-         bowerDirectory: "test/fixtures"
+         bowerDirectory: "tests/fixtures"
       },
       test: {
         options: {
@@ -69,9 +69,19 @@ module.exports = function(grunt) {
     },
 
     // Unit tests.
+    mochaTest: {
+      test: {
+        options: {
+          reporter: 'spec'
+        },
+        src: ['tests/mocha/**/*.js']
+      }
+    },
+
+    // Unit tests with coverage report.
     mocha_istanbul: {
       coverage: {
-        src: 'test/mocha'
+        src: 'tests/mocha'
       }
     }
 
@@ -84,13 +94,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-mocha-istanbul');
+  grunt.loadNpmTasks('grunt-mocha-test');
 
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
-  // TODO: write a nice test task
-  grunt.registerTask('test', ['clean', 'bower', 'mocha_istanbul']);
+  // Here are nice alias tasks.
+  grunt.registerTask('test', ['clean', 'bower', 'mocha_istanbul', 'jshint']);
+  grunt.registerTask('mocha', ['mochaTest'])
+  grunt.registerTask('lint', ['jshint']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('default', ['lint', 'test']);
 
 };

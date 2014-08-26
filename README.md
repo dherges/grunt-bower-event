@@ -3,9 +3,6 @@
 
 > Now Grunt is talking your Bower language, listening for answers.
 
- * former idea 1: "Manages your Bower packages through Grunt, scaffolding things for your target platform."
- * former idea 2: "Bower packages become client library folders, deployment-ready for Adobe Experience Manager."
-
 
 
 ## Getting Started
@@ -54,5 +51,3 @@ bower: {
 ## Release History
 
  * 2013-07-11   v0.1.0   First version.
-
-

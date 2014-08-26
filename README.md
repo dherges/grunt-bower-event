@@ -56,8 +56,8 @@ bower: {
 
 [grunt-img]:     https://cdn.gruntjs.com/builtwith.png
 [grunt-url]:     http://gruntjs.com/
-[travis-img]:    https://travis-ci.org/dherges/grunt-bower.svg?branch=master
-[travis-url]:    https://travis-ci.org/dherges/grunt-bower
-[coveralls-img]: https://img.shields.io/coveralls/dherges/grunt-bower.svg
-[coveralls-url]: https://coveralls.io/r/dherges/grunt-bower?branch=master
+[travis-img]:    https://travis-ci.org/dherges/grunt-bower-event.svg?branch=master
+[travis-url]:    https://travis-ci.org/dherges/grunt-bower-event
+[coveralls-img]: https://img.shields.io/coveralls/dherges/grunt-bower-event.svg
+[coveralls-url]: https://coveralls.io/r/dherges/grunt-bower-event?branch=master
 

@@ -10,7 +10,7 @@
 
 
 var defaultOptions = require('./task-options');
-var GruntLog = require('./listeners/GruntLog');
+var gruntLog = require('./GruntLogListener');
 
 var bower = require('bower');
 var bowerConfig = require('bower-config');
@@ -60,12 +60,7 @@ BowerTask.prototype.run = function() {
   args.push(this.options.argumentOptions, config);
   this.grunt.verbose.writeln("Command arguments are: " + JSON.stringify(args));
 
-  // 4) Get the result dispatcher that will delegate event results to the listeners
-  // FIXME: the listener GruntLog is instantiated multiple times, thus listening multiple
-  // times for consecutive targets
-  var dispatcher = this.getResultDispatcher();
-
-  // 5) Run bower and forward events to grunt.event API
+  // 4) Run bower and forward events to grunt.event API
   var done = this.done;
   var grunt = this.grunt;
   var prefix = this.options.eventPrefix;
@@ -113,81 +108,6 @@ BowerTask.prototype.getConfiguration = function () {
   mout.object.mixIn(config, this.options.config);
 
   return config;
-};
-
-BowerTask.prototype.getResultDispatcher = function () {
-  var done = this.done;
-  var listeners = [];
-
-  // always add the grunt logging
-  listeners.push(new GruntLog());
-
-  if (typeof this.options.listener == typeof 'string') {
-    var ListenerProto;
-    try {
-      ListenerProto = require('./listeners/' + this.options.listener);
-    } catch (err) {
-      try {
-        ListenerProto = require(this.options.scaffold);
-      } catch (err2) {
-        this.grunt.fail.fatal('Listener ' + this.options.listener + ' not found!');
-      }
-    }
-    listeners.push(new ListenerProto());
-  } else if (typeof this.options.listener == typeof {}) {
-    /* not a prototype so that users can plug-in a listener in
-     * grunt.initConfig({
-     * ..
-     *   bower: {
-     *     options: {
-     *       listener: {
-     *         end: function (data) {
-     *           // do something with <%= grunt.templates %> or other stuff
-     *         }
-     *       }
-     *     }
-     *   }
-     * ..
-     * })
-     */
-    listeners.push(this.options.listener);
-  } else if (typeof this.options.listener == typeof []) {
-    // concatenate listeners
-    this.options.listener.forEach(function (ListenerProto ) {
-      listeners.push(new ListenerProto());
-    });
-  }
-/*
-  return {
-    'onLog': function (data) {
-      listeners.forEach(function (listener) {
-        listener.log && listener.log(data);
-      });
-    },
-
-    'onEnd': function (data) {
-      listeners.forEach(function (listener) {
-        listener.end && listener.end(data);
-      });
-
-      done();
-    },
-
-    'onError': function (error) {
-      listeners.forEach(function (listener) {
-        listener.error && listener.error(error);
-      });
-
-      done();
-    },
-
-    'onPrompt': function (prompts, callback) {
-      listeners.forEach(function (listener) {
-        listener.prompt && listener.prompt(prompts, callback);
-      });
-    }
-  };
-*/
 };
 
 

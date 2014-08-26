@@ -83,6 +83,13 @@ module.exports = function(grunt) {
       coverage: {
         src: 'tests/mocha'
       }
+    },
+
+    // Publish coverage results to coveralls.io
+    coveralls: {
+      mochaCoverage: {
+        src: 'coverage/lcov.info'
+      }
     }
 
   });
@@ -93,11 +100,12 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-coveralls');
   grunt.loadNpmTasks('grunt-mocha-istanbul');
   grunt.loadNpmTasks('grunt-mocha-test');
 
   // Here are nice alias tasks.
-  grunt.registerTask('test', ['clean', 'bower', 'mocha_istanbul', 'jshint']);
+  grunt.registerTask('test', ['clean', 'bower', 'mocha_istanbul', 'jshint', 'coveralls']);
   grunt.registerTask('mocha', ['mochaTest'])
   grunt.registerTask('lint', ['jshint']);
 

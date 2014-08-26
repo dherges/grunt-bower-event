@@ -1,4 +1,4 @@
-# grunt-bower [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) [![Build Status](https://travis-ci.org/dherges/grunt-bower.svg?branch=master)](https://travis-ci.org/dherges/grunt-bower)
+# grunt-bower [![Built with Grunt][grunt-img]][grunt-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url]
 
 
 > Now Grunt is talking your Bower language, listening for answers.
@@ -52,3 +52,12 @@ bower: {
 
  * 2014-08-25   v0.2.0   Publish a version to npm registry.
  * 2013-07-11   v0.1.0   First version.
+
+
+[grunt-img]:     https://cdn.gruntjs.com/builtwith.png
+[grunt-url]:     http://gruntjs.com/
+[travis-img]:    https://travis-ci.org/dherges/grunt-bower.svg?branch=master
+[travis-url]:    https://travis-ci.org/dherges/grunt-bower
+[coveralls-img]: https://img.shields.io/coveralls/dherges/grunt-bower.svg
+[coveralls-url]: https://coveralls.io/r/dherges/grunt-bower?branch=master
+

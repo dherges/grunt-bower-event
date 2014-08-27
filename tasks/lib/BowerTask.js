@@ -66,18 +66,18 @@ BowerTask.prototype.run = function() {
   var prefix = this.options.eventPrefix;
   cmd.apply(bower.commands, args)
     .on('log', function () {
-      grunt.event.emit(prefix + 'log', arguments);
+      grunt.event.emit(prefix + 'log', Array.prototype.slice.call(arguments));
      })
     .on('error', function () {
-      grunt.event.emit(prefix + 'error', arguments);
+      grunt.event.emit(prefix + 'error', Array.prototype.slice.call(arguments));
       done();
     })
     .on('end', function () {
-      grunt.event.emit(prefix + 'end', arguments);
+      grunt.event.emit(prefix + 'end', Array.prototype.slice.call(arguments));
       done();
     })
     .on('prompt', function () {
-      grunt.event.emit(prefix + 'prompt', arguments);
+      grunt.event.emit(prefix + 'prompt', Array.prototype.slice.call(arguments));
     });
 };
 

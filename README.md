@@ -50,7 +50,7 @@ bower: {
 
 ## Release History
 
- * 2014-08-25   v0.2.0   Publish a version to npm registry.
+ * 2014-08-25   v0.2.0   Publish a version to npm registry.
  * 2013-07-11   v0.1.0   First version.
 
 

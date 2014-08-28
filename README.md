@@ -30,11 +30,53 @@ _Run this task with the `grunt bower` command._
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
 ### Options
 
-#### arguments
-TODO
+#### bowerDirectory
+
+Type: `String`
+
+Default: current working directory of grunt
+
+Bower working directory where your .bowerrc configuration is located.
+
+
+#### config
+
+Type: `Object`
+
+Default: empty, Bower default config
+
+Bower configuration according to its [specification](https://github.com/bower/config/blob/master/lib/util/defaults.js).
+Leave blank for Bower's default config.
+
+
+### arguments
+
+Type: `Array`
+
+Default: empty
+
+Arguments that are passed to the bower command.
+Example: ```['bootstrap']``` for command  ```'bower install'```.
+Leave blank if command does not take arguments.
 
 #### argumentOptions
-TODO
+
+Type: `Object`
+
+Default: empty
+
+Argument options that are passed to the bower command.
+Example: ```{"force-latest": true}``` for command ```bower install```
+
+
+#### eventPrefix
+
+Type: `String`
+
+Default: `bower.`
+
+Bower events are namespace-prefixed with this label when they are emitted through the ```grunt.event``` API.
+Example: listen for a log event with ```grunt.event.on('bower.log', function (data) { ... })```
 
 
 ### Usage Examples

@@ -45,19 +45,21 @@ Type: `Object`
 
 Default: empty, Bower default config
 
-Bower configuration according to its [specification](https://github.com/bower/config/blob/master/lib/util/defaults.js).
+Bower configuration according to the [specification](https://github.com/bower/config/blob/master/lib/util/defaults.js#L22-L41).
 Leave blank for Bower's default config.
 
 
-### arguments
+#### arguments
 
 Type: `Array`
 
 Default: empty
 
 Arguments that are passed to the bower command.
-Example: ```['bootstrap']``` for command  ```'bower install'```.
 Leave blank if command does not take arguments.
+
+Example: ```['bootstrap']``` for command  ```'bower install'```.
+
 
 #### argumentOptions
 
@@ -66,6 +68,7 @@ Type: `Object`
 Default: empty
 
 Argument options that are passed to the bower command.
+
 Example: ```{"force-latest": true}``` for command ```bower install```
 
 
@@ -76,6 +79,7 @@ Type: `String`
 Default: `bower.`
 
 Bower events are namespace-prefixed with this label when they are emitted through the ```grunt.event``` API.
+
 Example: listen for a log event with ```grunt.event.on('bower.log', function (data) { ... })```
 
 

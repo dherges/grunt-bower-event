@@ -20,7 +20,7 @@ var path = require('path');
 /** 
  * Creates a new task.
  *
- * @param context Context of the task function; the 'this' you would normally refer to inside a task function
+ * @param context Task function context (='this' inside a grunt task function)
  * @param grunt Grunt object
  */
 var BowerTask = function (context, grunt) {

@@ -1,8 +1,8 @@
 # grunt-bower-event
 
-> Now Grunt is talking your Bower language, listening for answers.
-
 [![Built with Grunt][grunt-img]][grunt-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url] [![Dependencies][deps-img]][deps-url] [![Dev Dependencies][devdeps-img]][devdeps-url]
+
+> Now Grunt is talking your Bower language, listening for answers.
 
 
 
@@ -99,6 +99,7 @@ bower: {
 
  * 2014-08-25   v0.2.0   Publish a version to npm registry.
  * 2013-07-11   v0.1.0   First version.
+
 
 
 [grunt-img]:     https://cdn.gruntjs.com/builtwith.png

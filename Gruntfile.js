@@ -17,8 +17,17 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc',
         force: true
       },
-      all: {
-        src: ['Gruntfile.js', 'tasks/**/*.js', 'tests/mocha/**/*.js']
+      task: {
+        src: ['tasks/**/*.js']
+      },
+      gruntfile: {
+        src: ['Gruntfile.js']
+      },
+      mocha: {
+        src: ['tests/mocha/**/*.js'],
+        options: {
+          jshintrc: 'tests/mocha/.jshintrc'
+        }
       }
     },
 
@@ -106,10 +115,9 @@ module.exports = function(grunt) {
 
   // Here are nice alias tasks.
   grunt.registerTask('test', ['clean', 'bower', 'mocha_istanbul', 'jshint', 'coveralls']);
-  grunt.registerTask('mocha', ['mochaTest'])
-  grunt.registerTask('lint', ['jshint']);
+  grunt.registerTask('mocha', ['mochaTest']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['lint', 'test']);
+  grunt.registerTask('default', ['test']);
 
 };

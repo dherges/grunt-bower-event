@@ -51,7 +51,7 @@ AemClientLibraries.prototype.end = function (data) {
     var dependencies = grunt.util
       .toArray(comp.dependencies)
       .map(function (dependency) {
-        return mapPackageName(dependency.pkgMeta.name)
+        return mapPackageName(dependency.pkgMeta.name);
       });
 
     // .content.xml template

@@ -53,7 +53,7 @@ BowerTask.prototype.run = function() {
   var args = [];
   if (this.options.arguments) {
     args.push(this.options.arguments);
-  } else if (command == 'install') {
+  } else if (command === 'install') {
     // install takes three params (endpoints, options, config)
     args.push(undefined);
   }

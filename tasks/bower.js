@@ -21,4 +21,4 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('bower', packageJson.description, function () {
     new BowerTask(this, grunt).run(); // looks like Java's new Runnable().run()... Oo
   });
-}
+};

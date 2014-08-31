@@ -1,7 +1,8 @@
-# grunt-bower-event [![Built with Grunt][grunt-img]][grunt-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url]
-
+# grunt-bower-event
 
 > Now Grunt is talking your Bower language, listening for answers.
+
+[![Built with Grunt][grunt-img]][grunt-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url] [![Dependencies][deps-img]][deps-url] [![Dev Dependencies][devdeps-img]][devdeps-url]
 
 
 
@@ -106,4 +107,7 @@ bower: {
 [travis-url]:    https://travis-ci.org/dherges/grunt-bower-event
 [coveralls-img]: https://img.shields.io/coveralls/dherges/grunt-bower-event.svg
 [coveralls-url]: https://coveralls.io/r/dherges/grunt-bower-event?branch=master
-
+[deps-img]:      https://david-dm.org/dherges/grunt-bower-event.png
+[deps-url]:      https://david-dm.org/dherges/grunt-bower-event
+[devdeps-img]:   https://david-dm.org/dherges/grunt-bower-event/dev-status.png
+[devdeps-url]:   https://david-dm.org/dherges/grunt-bower-event#info=devDependencies

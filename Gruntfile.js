@@ -55,25 +55,6 @@ module.exports = function(grunt) {
             interactive: true
           }
         }
-      },
-      aemClientLibraries: {
-        options: {
-          listener: 'AemClientLibraries'
-        },
-        command: "list"
-      },
-      customListener: {
-        options: {
-          listener: {
-            log: function () {
-              grunt.log.oklns("My Custom Listener logs!");
-            },
-            end: function (data) {
-              grunt.log.oklns("My Custom Listener received the end event: " + data);
-            }
-          }
-        },
-        command: "list"
       }
     },
 

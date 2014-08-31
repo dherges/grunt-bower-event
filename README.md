@@ -86,12 +86,34 @@ Example: listen for a log event with ```grunt.event.on('bower.log', function (da
 
 ### Usage Examples
 
+#### Simple Bower command
+
 ```js
 bower: {
   install: {
   }
 }
 ```
+
+The above configuration will run ```bower install```.
+
+Just give the desired bower command as grunt target. The list of commands is available at [Bower's API documentation](http://bower.io/docs/api/)
+
+#### Explicit Bower command
+
+```js
+bower: {
+  customTarget: {
+    command: 'list'
+  }
+}
+```
+
+The above configuration will run ```bower list```.
+
+#### TODO
+
+**more samples to come..**
 
 
 

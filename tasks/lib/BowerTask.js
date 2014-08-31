@@ -36,7 +36,7 @@ BowerTask.prototype.run = function() {
   this.done = this.context.async();
 
   // 1) Determine the Bower command that is to be executed
-  var command = this.context.data.command || this.context.target;
+  var command = this.getBowerCommand();
   this.grunt.verbose.writeln("Running bower command: " + command);
 
   // 2) Read the bower configuration that will be passed to be command
@@ -79,6 +79,10 @@ BowerTask.prototype.run = function() {
     .on('prompt', function () {
       grunt.event.emit.apply(grunt.event, [prefix + 'prompt'].concat(Array.prototype.slice.call(arguments)));
     });
+};
+
+BowerTask.prototype.getBowerCommand = function () {
+  return this.context.data.command || this.context.target;
 };
 
 BowerTask.prototype.getConfiguration = function () {

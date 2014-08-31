@@ -54,4 +54,26 @@ describe('BowerTask', function () {
       expect(task.options).to.have.property('abc', 'xyz')
     })
   })
+
+  describe('getBowerCommand', function () {
+    var contextMock = {
+      options: function () { return {} },
+      data: {}
+    }
+
+    it('should determine command from context.data.command', function () {
+      contextMock.data.command = 'help'
+      var task = new BowerTask(contextMock, {})
+
+      expect(task.getBowerCommand()).to.equal('help')
+    })
+
+    it('should determine command from context.target as fallback', function () {
+      contextMock.data.command = ''
+      contextMock.target = 'info'
+      var task = new BowerTask(contextMock, {})
+
+      expect(task.getBowerCommand()).to.equal('info')
+    })
+  })
 })

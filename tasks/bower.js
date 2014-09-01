@@ -1,6 +1,6 @@
 /*
- * grunt-bower
- * https://github.com/dherges/grunt-bower
+ * grunt-bower-event
+ * https://github.com/dherges/grunt-bower-event
  *
  * Copyright (c) 2014 David Herges
  * Licensed under the MIT license.

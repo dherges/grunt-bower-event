@@ -70,6 +70,9 @@ module.exports = function(grunt) {
 
     // Unit tests with coverage report.
     mocha_istanbul: {
+      options: {
+        coverageFolder: 'tests/coverage'
+      },
       coverage: {
         src: 'tests/mocha'
       }
@@ -78,7 +81,7 @@ module.exports = function(grunt) {
     // Publish coverage results to coveralls.io
     coveralls: {
       mochaCoverage: {
-        src: 'coverage/lcov.info'
+        src: 'tests/coverage/lcov.info'
       }
     }
 

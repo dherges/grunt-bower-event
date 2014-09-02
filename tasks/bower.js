@@ -10,11 +10,14 @@
 
 var packageJson = require('../package.json');
 var BowerTask = require('./lib/BowerTask');
+var GruntLogListener = require('./lib/GruntLogListener');
 
 module.exports = function(grunt) {
 
   // Please see the grunt documentation for more information regarding task
   // creation: https://github.com/gruntjs/grunt/blob/devel/docs/toc.md
+
+  new GruntLogListener(grunt);
 
   grunt.registerMultiTask('bower', packageJson.description, function () {
 

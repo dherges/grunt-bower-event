@@ -8,9 +8,7 @@
 
 'use strict';
 
-
 var defaultOptions = require('./task-options');
-var gruntLog = require('./GruntLogListener');
 
 var bower = require('bower');
 var bowerConfig = require('bower-config');

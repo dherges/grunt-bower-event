@@ -1,7 +1,7 @@
 {
   "name": "grunt-bower-event",
   "description": "Now Grunt is talking your Bower language, listening for answers.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/dherges/grunt-bower",
   "author": {
     "name": "David Herges",

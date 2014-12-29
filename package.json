@@ -1,7 +1,7 @@
 {
   "name": "grunt-bower-event",
   "description": "Grunt plugin for Bower, a package manager for the web.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/dherges/grunt-bower-event",
   "author": {
     "name": "David Herges",

@@ -1,6 +1,6 @@
 /*
- * grunt-bower
- * https://github.com/dherges/grunt-bower
+ * grunt-bower-event
+ * https://github.com/dherges/grunt-bower-event
  *
  * Copyright (c) 2014 David Herges
  * Licensed under the MIT license.
@@ -8,9 +8,7 @@
 
 'use strict';
 
-
 var defaultOptions = require('./task-options');
-var gruntLog = require('./GruntLogListener');
 
 var bower = require('bower');
 var bowerConfig = require('bower-config');
@@ -20,7 +18,7 @@ var path = require('path');
 /** 
  * Creates a new task.
  *
- * @param context Context of the task function; the 'this' you would normally refer to inside a task function
+ * @param context Task function context (='this' inside a grunt task function)
  * @param grunt Grunt object
  */
 var BowerTask = function (context, grunt) {
@@ -36,7 +34,7 @@ BowerTask.prototype.run = function() {
   this.done = this.context.async();
 
   // 1) Determine the Bower command that is to be executed
-  var command = this.context.data.command || this.context.target;
+  var command = this.getBowerCommand();
   this.grunt.verbose.writeln("Running bower command: " + command);
 
   // 2) Read the bower configuration that will be passed to be command
@@ -53,7 +51,7 @@ BowerTask.prototype.run = function() {
   var args = [];
   if (this.options.arguments) {
     args.push(this.options.arguments);
-  } else if (command == 'install') {
+  } else if (command === 'install') {
     // install takes three params (endpoints, options, config)
     args.push(undefined);
   }
@@ -79,6 +77,10 @@ BowerTask.prototype.run = function() {
     .on('prompt', function () {
       grunt.event.emit.apply(grunt.event, [prefix + 'prompt'].concat(Array.prototype.slice.call(arguments)));
     });
+};
+
+BowerTask.prototype.getBowerCommand = function () {
+  return this.context.data.command || this.context.target;
 };
 
 BowerTask.prototype.getConfiguration = function () {

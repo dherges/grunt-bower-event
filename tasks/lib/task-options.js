@@ -1,6 +1,6 @@
 /*
- * grunt-bower
- * https://github.com/dherges/grunt-bower
+ * grunt-bower-event
+ * https://github.com/dherges/grunt-bower-event
  *
  * Copyright (c) 2014 David Herges
  * Licensed under the MIT license.
@@ -15,7 +15,7 @@
 module.exports = {
 
   /**
-   * Bower working directory where your .bowerrc configuration is located
+   * Bower working directory where your ```.bowerrc``` configuration is located.
    */
   bowerDirectory: undefined,
 
@@ -42,11 +42,6 @@ module.exports = {
    * ```grunt.event```. Example: to listen for a log event ```grunt.event.on('bower.log',
    * function (data) { ... })```
    */
-  eventPrefix: 'bower.',
-
-  /**
-   * Specify your custom listener functions (TBD)
-   */
-  listener: undefined
+  eventPrefix: 'bower.'
 
 };

@@ -1,6 +1,6 @@
 /*
- * grunt-bower
- * https://github.com/dherges/grunt-bower
+ * grunt-bower-event
+ * https://github.com/dherges/grunt-bower-event
  *
  * Copyright (c) 2014 David Herges
  * Licensed under the MIT license.
@@ -17,14 +17,23 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc',
         force: true
       },
-      all: {
-        src: ['Gruntfile.js', 'tasks/**/*.js', 'tests/mocha/**/*.js']
+      task: {
+        src: ['tasks/**/*.js']
+      },
+      gruntfile: {
+        src: ['Gruntfile.js']
+      },
+      mocha: {
+        src: ['tests/mocha/**/*.js'],
+        options: {
+          jshintrc: 'tests/mocha/.jshintrc'
+        }
       }
     },
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['tmp']
+      tests: ['tests/output']
     },
 
     // Configuration to be run (and then tested).
@@ -46,25 +55,6 @@ module.exports = function(grunt) {
             interactive: true
           }
         }
-      },
-      aemClientLibraries: {
-        options: {
-          listener: 'AemClientLibraries'
-        },
-        command: "list"
-      },
-      customListener: {
-        options: {
-          listener: {
-            log: function () {
-              grunt.log.oklns("My Custom Listener logs!");
-            },
-            end: function (data) {
-              grunt.log.oklns("My Custom Listener received the end event: " + data);
-            }
-          }
-        },
-        command: "list"
       }
     },
 
@@ -80,6 +70,9 @@ module.exports = function(grunt) {
 
     // Unit tests with coverage report.
     mocha_istanbul: {
+      options: {
+        coverageFolder: 'tests/coverage'
+      },
       coverage: {
         src: 'tests/mocha'
       }
@@ -88,7 +81,7 @@ module.exports = function(grunt) {
     // Publish coverage results to coveralls.io
     coveralls: {
       mochaCoverage: {
-        src: 'coverage/lcov.info'
+        src: 'tests/coverage/lcov.info'
       }
     }
 
@@ -106,10 +99,9 @@ module.exports = function(grunt) {
 
   // Here are nice alias tasks.
   grunt.registerTask('test', ['clean', 'bower', 'mocha_istanbul', 'jshint', 'coveralls']);
-  grunt.registerTask('mocha', ['mochaTest'])
-  grunt.registerTask('lint', ['jshint']);
+  grunt.registerTask('mocha', ['mochaTest']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['lint', 'test']);
+  grunt.registerTask('default', ['test']);
 
 };

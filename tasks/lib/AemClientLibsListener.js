@@ -1,6 +1,6 @@
 /*
- * grunt-bower
- * https://github.com/dherges/grunt-bower
+ * grunt-bower-event
+ * https://github.com/dherges/grunt-bower-event
  *
  * Copyright (c) 2014 David Herges
  * Licensed under the MIT license.
@@ -51,7 +51,7 @@ AemClientLibraries.prototype.end = function (data) {
     var dependencies = grunt.util
       .toArray(comp.dependencies)
       .map(function (dependency) {
-        return mapPackageName(dependency.pkgMeta.name)
+        return mapPackageName(dependency.pkgMeta.name);
       });
 
     // .content.xml template

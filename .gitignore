@@ -1,6 +1,7 @@
 node_modules/
 tests/output/
 tests/coverage/
+coverage/
 .coveralls.yml
 .idea/
 **/*.iml

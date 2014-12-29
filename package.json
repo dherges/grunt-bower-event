@@ -2,7 +2,7 @@
   "name": "grunt-bower-event",
   "description": "Grunt plugin for Bower, a package manager for the web.",
   "version": "0.1.0",
-  "homepage": "https://github.com/dherges/grunt-bower",
+  "homepage": "https://github.com/dherges/grunt-bower-event",
   "author": {
     "name": "David Herges",
     "email": "david@spektrakel.de",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dherges/grunt-bower.git"
+    "url": "https://github.com/dherges/grunt-bower-event.git"
   },
   "bugs": {
-    "url": "https://github.com/dherges/grunt-bower/issues"
+    "url": "https://github.com/dherges/grunt-bower-event/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/dherges/grunt-bower/blob/master/LICENSE-MIT"
+      "url": "https://github.com/dherges/grunt-bower-event/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",

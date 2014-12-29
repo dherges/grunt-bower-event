@@ -87,6 +87,12 @@ module.exports = function(grunt) {
 
   });
 
+  grunt.event.on('bower.end', function (data, command) {
+    console.log("received data from command: " + command);
+    console.log(data);
+  });
+
+
   // Actually load this plugin's task(s).
   grunt.loadTasks('tasks');
 

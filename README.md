@@ -111,6 +111,22 @@ bower: {
 
 The above configuration will run ```bower list```.
 
+#### Subscribe to Bower events
+
+```js
+grunt.event.on('bower.end', function (data, command) {
+  console.log("received data from command: " + command);
+  console.log(data);
+});
+```
+
+Events from bower commands are emitted through the ```grunt.event``` API. The events are ```log```, ```error```,
+```end```, and  ```prompt```.  They are prefixed with the option given by ```eventPrefix```, e.g. "bower.end" in the
+example above.
+
+The callback takes two parameters: the ```data``` object that the bower command produced and a string argument
+```command```, e.g. "install".
+
 #### TODO
 
 **more samples to come..**

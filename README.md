@@ -135,6 +135,7 @@ The callback takes two parameters: the ```data``` object that the bower command 
 
 ## Release History
 
+ * 2014-12-29   v0.2.1   Filter events by bower command (issue #2).
  * 2014-08-25   v0.2.0   Publish a version to npm registry.
  * 2013-07-11   v0.1.0   First version.
 

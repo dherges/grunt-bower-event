@@ -135,6 +135,7 @@ The callback takes two parameters: the ```data``` object that the bower command 
 
 ## Release History
 
+ * 2015-02-14   v0.3.1   Release for #3 and #4.
  * 2014-12-29   v0.3.0   NPM registry version fixes. I encourage you to use v0.3.0 and later.
  * 2014-12-29   v0.2.1   Filter events by bower command (see [issue #2]("https://github.com/dherges/grunt-bower-event/issues/2" "Issue #2")).
  * 2014-08-25   v0.2.0   Publish a version to npm registry.
